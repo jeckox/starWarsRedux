@@ -1,22 +1,16 @@
 import * as actions from "../actions";
 
 const initialState = {
-    characters: [],
-    charactersHistory: []
+    characters: []
 };
 
 
 const charactersDataRecevied = (state, action) => {
     const data = action.data;
-    let newData = [];
-    //if (!data.length) return state;
-    newData = data;
-    console.info(newData);
-    console.info(state.characters);
-    console.info('-------');
+    if (![data].length) return state;
     return {
         ...state,
-        characters: [newData, ...state.characters]
+        characters: [...state.characters, data]
     };
 };
 

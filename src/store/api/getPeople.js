@@ -1,5 +1,5 @@
 import "isomorphic-fetch";
-const getPeople = async id => {
+const getPeople = async theURL => {
     var misCabeceras = new Headers();
     var miInit = {
         method: 'GET',
@@ -7,7 +7,7 @@ const getPeople = async id => {
         mode: 'cors',
         cache: 'default'
     };
-    const url = id;
+    const url = theURL;
     const response = await fetch(
         url, miInit
     );

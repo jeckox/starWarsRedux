@@ -4,36 +4,35 @@ import * as actions from "../../store/actions";
 import Chip from '@material-ui/core/Chip';
 
 const findCharacter =( id,characters )=>{
-    let exist = false;
-    console.info('........');
-    console.info(id);
-    console.info(characters);
-    console.info('........');
+    let exist = "false";
     characters.map(element => {
-        console.info(id + ' - ' + element.url);
         if(id == element.url){
             exist = element;
         }
     });
-    console.info(exist);
     return exist;
 }
 
 class Charactes extends Component {
 
     componentDidMount() {
-        //this.props.onLoad();
-        if (findCharacter(this.props.people, this.props.characters) == false){
+
+        const existElement = findCharacter(this.props.people, this.props.characters);
+        if (existElement == "false"){
             this.props.onLoad(this.props.people);
         }
 
     }
     render() {
-       // const { characters } = findCharacter(this.props.people, this.props.characters);
-        //const elementCh = characters ? <Chip label={characters.name} component="a" href="#chip" clickable /> : <span></span>
-        //console.info(this.props.characters);
+        const nameurl = this.props.people;
+        const charra = this.props.characters;
+        const characterPeople = findCharacter(nameurl, charra);
+        let element = <p>{nameurl}</p>;
+        if (characterPeople != "false") {
+            element = <Chip label={characterPeople.name} component="a" href="#chip" clickable />
+        }
         return (
-            <p>nm</p>
+            element
         );
     }
 }
