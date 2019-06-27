@@ -1,3 +1,3 @@
 import getFilms from './getFilms';
-
-export default {getFilms};
+import getPeople from './getPeople';
+export default { getFilms, getPeople };

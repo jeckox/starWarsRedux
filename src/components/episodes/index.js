@@ -1,21 +1,50 @@
-import React, { Component } from 'react';
-import API from './../../store/api';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions";
+import Episode from '../episode'
+
+const renderEpisodes = films => {
+    const pelis = films.map((film) => {
+        return <Episode theFilm={film} key={film.episode_id}></Episode>
+    });
+    return (
+        <div>
+            <h2>Episodes</h2>
+            {pelis}
+        </div>
+    )
+};
+
 class Episodes extends Component {
-    state = {
-        films : []
-    }
     componentDidMount(){
-        //console.info(API.getFilms());
-        axios.get('https://swapi.co/api/films').then(res => {
-            const films = res.results;
-            this.setState({ films });
-        });
+        this.props.onLoad();
     }
     render() {
+        const {films} = this.props;
         return (
-            <p>Episodes</p>
+            renderEpisodes(films)
         );
     }
 }
-export default Episodes;
+
+
+const mapState = (state, ownProps) => {
+    const {
+        films
+    } = state.episodes;
+    return {
+        films
+    };
+};
+
+const mapDispatch = dispatch => ({
+    onLoad: () =>
+        dispatch({
+            type: actions.FETCH_FILMS
+        })
+});
+
+export default connect(
+    mapState,
+    mapDispatch
+)(Episodes);

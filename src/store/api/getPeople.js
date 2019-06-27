@@ -1,5 +1,5 @@
 import "isomorphic-fetch";
-const getFilms = async(films) => {
+const getPeople = async id => {
     var misCabeceras = new Headers();
     var miInit = {
         method: 'GET',
@@ -7,14 +7,14 @@ const getFilms = async(films) => {
         mode: 'cors',
         cache: 'default'
     };
-
+    const url = id;
     const response = await fetch(
-        'https://swapi.co/api/films/', miInit
+        url, miInit
     );
     if (!response.ok) {
         return { error: { code: response.status } };
     }
     const json = await response.json();
-    return { data: json.results };
+    return { data: json };
 }
-export default getFilms;
+export default getPeople;
