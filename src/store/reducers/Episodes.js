@@ -8,6 +8,7 @@ const initialState = {
 const filmDataRecevied = (state, action) => {
     const data = action.data;
     if (!data.length) return state;
+    data.sort((a, b) => (a.episode_id > b.episode_id) ? 1 : -1);
 
     return {
         ...state,

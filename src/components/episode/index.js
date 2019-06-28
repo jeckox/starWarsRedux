@@ -5,21 +5,18 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-//import Chip from '@material-ui/core/Chip';
 import Character from './../character'
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 345,
-       display:"inline-block",
+        display:"inline-block",
         margin: 10,
         verticalAlign: 'top'
     },
 });
 const character = ( characterData )=>{
     return characterData.map((theCharacter) =>{
-        return <Character people={theCharacter} />
-        //return <Chip label={theCharacter} component="a" href="#chip" clickable/>
+        return <Character people={theCharacter} key="characterData" view="mini"/>
     })
 }
 const episode = ( theFilm ) => {

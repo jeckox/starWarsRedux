@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import * as actions from "../../store/actions";
+import {  withStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import './Character.css'
+const ColorCircularProgress = withStyles({
+    root: {
+        color: '#00DA9C',
+    },
+})(CircularProgress);
 const findCharacter =( id,characters )=>{
     let exist = "false";
     characters.map(element => {
@@ -14,25 +22,35 @@ const findCharacter =( id,characters )=>{
 }
 
 class Charactes extends Component {
+    renderMini(theCharacter){
+        const urlTo = '/Character/' + theCharacter.url.replace('https://swapi.co/api/people/', '');
+        return <div className="people-element"><Link to={urlTo}><Chip label={theCharacter.name} clickable /></Link></div>
+    };
+    renderFull(theCharacter) {
 
+        return <div>{theCharacter.name}</div>;
+    };
     componentDidMount() {
-
-        const existElement = findCharacter(this.props.people, this.props.characters);
+        const nameUrl = this.props.people ? this.props.people : ('https://swapi.co/api/people/' + this.props.match.params.idCharacter + '/');
+        const existElement = findCharacter(nameUrl, this.props.characters);
         if (existElement == "false"){
-            this.props.onLoad(this.props.people);
+            this.props.onLoad(nameUrl);
         }
 
     }
     render() {
-        const nameurl = this.props.people;
+        const view = this.props.view ? this.props.view : 'full';
+        let element = <ColorCircularProgress size={10} thickness={5} />;
+
+        const nameurl = this.props.people ? this.props.people : ('https://swapi.co/api/people/' + this.props.match.params.idCharacter.replace('/', '') + '/');
         const charra = this.props.characters;
         const characterPeople = findCharacter(nameurl, charra);
-        let element = <p>{nameurl}</p>;
+
         if (characterPeople != "false") {
-            element = <Chip label={characterPeople.name} component="a" href="#chip" clickable />
+            element = (view != 'mini') ? this.renderFull( characterPeople ) : this.renderMini( characterPeople )
         }
         return (
-            element
+            <div className="people-element">{element}</div>
         );
     }
 }
