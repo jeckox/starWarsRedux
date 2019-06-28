@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import Episode from '../episode'
+import './Episodes.css'
 
 const renderEpisodes = films => {
     const pelis = films.map((film) => {
-        return <Episode theFilm={film} key={film.episode_id}></Episode>
+        return <div className='episodes-content'><Episode theFilm={film} key={film.episode_id}></Episode></div>
     });
     return (
         <div>
