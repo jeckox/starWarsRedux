@@ -1,3 +1,3 @@
-import EpisodesSagas from "./EpisodesSagas";
-import CharactersSagas from "./CharactersSagas";
+import EpisodesSagas from './EpisodesSagas';
+import CharactersSagas from './CharactersSagas';
 export default [...EpisodesSagas, ...CharactersSagas];

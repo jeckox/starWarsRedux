@@ -1,51 +1,46 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../store/actions";
-import Episode from '../episode'
-import './Episodes.css'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-const renderEpisodes = films => {
-    const pelis = films.map((film) => {
-        return <div className='episodes-content'><Episode theFilm={film} key={film.episode_id}></Episode></div>
-    });
-    return (
-        <div>
-            <h2>Episodes</h2>
-            {pelis}
-        </div>
-    )
-};
+import * as actions from '../../store/actions';
+import Layout from './layoutEpisodes';
 
 class Episodes extends Component {
-    componentDidMount(){
-        this.props.onLoad();
-    }
-    render() {
-        const {films} = this.props;
-        return (
-            renderEpisodes(films)
-        );
-    }
+	componentDidMount() {
+		this.props.onLoad();
+	}
+	render() {
+		const {films} = this.props;
+
+		return (
+			<Layout films={films} />
+		);
+	}
 }
 
+Episodes.propTypes = {
+	onLoad: PropTypes.func,
+	films: PropTypes.array
+};
 
-const mapState = (state, ownProps) => {
-    const {
-        films
-    } = state.episodes;
-    return {
-        films
-    };
+const mapState = (state) => {
+	const {
+		films
+	} = state.episodes;
+
+	return {
+		films
+	};
 };
 
 const mapDispatch = dispatch => ({
-    onLoad: () =>
-        dispatch({
-            type: actions.FETCH_FILMS
-        })
+	onLoad: () =>
+		dispatch({
+			type: actions.FETCH_FILMS
+		})
 });
 
 export default connect(
-    mapState,
-    mapDispatch
+	mapState,
+	mapDispatch
 )(Episodes);

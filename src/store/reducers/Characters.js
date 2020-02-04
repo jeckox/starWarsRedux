@@ -1,32 +1,35 @@
-import * as actions from "../actions";
+import * as actions from '../actions';
 
 const initialState = {
-    characters: []
+	characters: []
 };
-const findCharacter = (id, characters) => {
-    let exist = "false";
-    characters.map(element => {
-        if (id == element.url) {
-            exist = element;
-        }
-    });
-    return exist;
-}
+
 const charactersDataRecevied = (state, action) => {
-    const data = action.data;
-    if (![data].length) return state;
-    return {
-        ...state,
-        characters: [...state.characters, data]
-    };
+	const data = {
+		...action.data,
+		hairColor: action.data.hair_color,
+		skinColor: action.data.skin_color,
+		eyeColor: action.data.eye_color
+	};
+
+	if (![data].length) {
+		return state;
+	}
+	return {
+		...state,
+		characters: [...state.characters, data]
+	};
 };
 
 const handlers = {
-    [actions.CHARACTERS_RECEIVED]: charactersDataRecevied
+	[actions.CHARACTERS_RECEIVED]: charactersDataRecevied
 };
 
 export default (state = initialState, action) => {
-    const handler = handlers[action.type];
-    if (typeof handler === "undefined") return state;
-    return handler(state, action);
+	const handler = handlers[action.type];
+
+	if (typeof handler === 'undefined') {
+		return state;
+	}
+	return handler(state, action);
 };
