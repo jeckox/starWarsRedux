@@ -10,11 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Character from '../character';
 
 
-const character = (characterData)=>{
-	return characterData.map((theCharacter) =>{
-		return <Character people={theCharacter} key={theCharacter} view="mini" />;
-	});
-};
+const renderCharacters = (characterData) => characterData.map((theCharacter) => <Character people={theCharacter} key={theCharacter} view="mini" />);
 const episode = ({theFilm}) => {
 	const {title, episodeId, director, characters} = theFilm;
 	const episode = 'Episode ' + episodeId;
@@ -38,7 +34,7 @@ const episode = ({theFilm}) => {
 			</CardActionArea>
 			<CardActions>
 				<CardContent>
-					{character(characters)}
+					{renderCharacters(characters)}
 				</CardContent>
 			</CardActions>
 		</Card>

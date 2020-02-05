@@ -46,15 +46,15 @@ const Layout = ({character, episodes}) => {
 	const {name, height, gender, mass, hairColor, skinColor, eyeColor, films} = character;
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
-	const handleClick = () => {
+	const handleClick = React.useCallback(() => {
 		setOpen(!open);
-	};
+	}, [setOpen, open]);
 	const renderMovies = () => {
 		return films.map(element => {
 			const theText = episodes.find((episode)=>episode.url === element);
 
 			return theText ? (<ListItem button className={classes.nested} key={element}>
-				<Link className={classes.linked} to={'/Episodes/' + theText.episodeId}><ListItemText primary={theText.title} /></Link>
+				<Link className={classes.linked} to={'/Episodes/' + theText.url.replace('https://swapi.co/api/films/', '')}><ListItemText primary={theText.title} /></Link>
 			</ListItem>) : null;
 		});
 	};

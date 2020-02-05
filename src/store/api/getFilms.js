@@ -1,15 +1,17 @@
 import 'isomorphic-fetch';
 const getFilms = async(films) => {
-	var misCabeceras = new Headers();
-	var miInit = {
+	const headers = new Headers();
+	const miInit = {
 		method: 'GET',
-		headers: misCabeceras,
+		headers,
 		mode: 'cors',
 		cache: 'default'
 	};
 
+	const url = 'https://swapi.co/api/films/' + (films || '');
+
 	const response = await fetch(
-		'https://swapi.co/api/films/', miInit
+		url, miInit
 	);
 
 	if (!response.ok) {
@@ -17,7 +19,7 @@ const getFilms = async(films) => {
 	}
 	const json = await response.json();
 
-	return {data: json.results};
+	return {data: films ? json : json.results};
 };
 
 export default getFilms;
