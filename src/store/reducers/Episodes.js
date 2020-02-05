@@ -5,7 +5,7 @@ const initialState = {
 };
 
 
-const filmDataRecevied = (state, action) => {
+const filmsDataRecevied = (state, action) => {
 	const data = action.data.map(item => {
 		return {
 			...item,
@@ -25,9 +25,31 @@ const filmDataRecevied = (state, action) => {
 		films: data
 	};
 };
+const filmDataRecevied = (state, action) => {
+	const data = action.data;
+
+	if (!data) {
+		return state;
+	}
+	const newFilm = {
+		...data,
+		episodeId: data.episode_id,
+		openingCrawl: data.opening_crawl,
+		releaseDate: data.release_date
+	};
+	const newState = [...state.films, newFilm];
+
+	newState.sort((a, b) => (a.episodeId > b.episodeId) ? 1 : -1);
+
+	return {
+		...state,
+		films: newState
+	};
+};
 
 const handlers = {
-	[actions.FILMS_RECEIVED]: filmDataRecevied
+	[actions.FILMS_RECEIVED]: filmsDataRecevied,
+	[actions.FILM_RECEIVED]: filmDataRecevied
 };
 
 export default (state = initialState, action) => {

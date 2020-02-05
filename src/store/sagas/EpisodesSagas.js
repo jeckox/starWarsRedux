@@ -3,13 +3,14 @@ import API from '../api';
 import * as actions from '../actions';
 
 function *watchEpisodes(action) {
-	const {error, data} = yield call(API.getFilms);
+	const {error, data} = yield call(API.getFilms, action.id);
+	const type = action.id ? actions.FILM_RECEIVED : actions.FILMS_RECEIVED;
 
 	if (error) {
 		yield cancel();
 		return;
 	}
-	yield put({type: actions.FILMS_RECEIVED,
+	yield put({type,
 		data});
 }
 

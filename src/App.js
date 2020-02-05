@@ -4,6 +4,7 @@ import createStore from './store';
 import {Provider} from 'react-redux';
 import Header from './components/header';
 import Episodes from './components/episodes';
+import Episode from './components/episode';
 import Character from './components/character';
 const store = createStore();
 
@@ -15,7 +16,7 @@ class App extends Component {
 				<BrowserRouter>
 					<Route exact path="/" component={Episodes} />
 					<Route path="/Character/:idCharacter" component={Character} />
-					<Route path="/Episode/:idEpisode" component={Episodes} />
+					<Route path="/Episodes/:episodeId" component={Episode} />
 				</BrowserRouter>
 			</Provider>
 		);
