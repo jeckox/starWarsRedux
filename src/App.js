@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import createStore from './store';
 import {Provider} from 'react-redux';
-import Header from './components/header';
-import Episodes from './components/episodes';
+import Header from './components/common/Header/Header';
+import Home from './components/Home';
 import Episode from './components/episode';
 import Character from './components/character';
 const store = createStore();
@@ -14,9 +14,9 @@ class App extends Component {
 			<Provider store={store}>
 				<Header />
 				<BrowserRouter>
-					<Route exact path="/" component={Episodes} />
-					<Route path="/Character/:idCharacter" component={Character} />
-					<Route path="/Episodes/:episodeId" component={Episode} />
+					<Route exact path="/" component={Home} />
+					<Route exact path="/Episodes/:episodeId" component={Episode} view="Detail" />
+					<Route path="/Character/:characterId" view="Detail" component={Character} />
 				</BrowserRouter>
 			</Provider>
 		);

@@ -9,6 +9,7 @@ const filmsDataRecevied = (state, action) => {
 	const data = action.data.map(item => {
 		return {
 			...item,
+			urlId: item.url.replace('https://swapi.co/api/films/', '')[0],
 			episodeId: item.episode_id,
 			openingCrawl: item.opening_crawl,
 			releaseDate: item.release_date
