@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as actions from '../../store/actions';
-import Layout from './layoutEpisodes';
+import LayoutHome from './LayoutHome';
 
 class Episodes extends Component {
 	componentDidMount() {
@@ -13,7 +13,8 @@ class Episodes extends Component {
 		const {films} = this.props;
 
 		return (
-			<Layout films={films} />
+			films.length &&
+				<LayoutHome films={films} />
 		);
 	}
 }

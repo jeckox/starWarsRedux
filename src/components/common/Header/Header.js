@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		fontSize: '1.25rem',
-		fontWeight: '500'
+		fontWeight: '500',
+		color: '#ffe300'
 	}
 }));
 const Header = () => {

@@ -9,11 +9,9 @@ import Typography from '@material-ui/core/Typography';
 
 import Character from '../character';
 
-
-const renderCharacters = (characterData) => characterData.map((theCharacter) => <Character people={theCharacter} key={theCharacter} view="mini" />);
-const episode = ({theFilm}) => {
-	const {title, episodeId, director, characters} = theFilm;
-	const episode = 'Episode ' + episodeId;
+const CardEpisode = ({episode}) => {
+	const {title, episodeId, director, characters} = episode;
+	const episodeNumber = 'Episode ' + episodeId;
 
 	return (
 		<Card key={episodeId}>
@@ -23,7 +21,7 @@ const episode = ({theFilm}) => {
 						{title}
 					</Typography>
 					<Typography variant="body2" color="textSecondary" component="p">
-						{episode}
+						{episodeNumber}
 					</Typography>
 					<Typography variant="body2" color="textSecondary" component="p">
 						{director}
@@ -34,14 +32,14 @@ const episode = ({theFilm}) => {
 			</CardActionArea>
 			<CardActions>
 				<CardContent>
-					{renderCharacters(characters)}
+					{characters.map((character) => <Character people={character} key={character} view="mini" />)}
 				</CardContent>
 			</CardActions>
 		</Card>
 	);
 };
 
-episode.propTypes = {
-	theFilm: PropTypes.object
+CardEpisode.propTypes = {
+	episode: PropTypes.object
 };
-export default episode;
+export default CardEpisode;

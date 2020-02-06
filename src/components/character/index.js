@@ -1,26 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-
 import PropTypes from 'prop-types';
-import * as actions from '../../store/actions';
-
-import {withStyles} from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Layout from './layoutCharacter';
+
+import * as actions from '../../store/actions';
+import Loader from '../common/Loader/Loader';
+import DetailCharacter from './DetailCharacter';
 
 import './Character.css';
-const ColorCircularProgress = withStyles({
-	root: {
-		color: '#00DA9C'
-	}
-})(CircularProgress);
+
 const findCharacter = (id, characters)=> characters.find((element) => id === element.url);
 
 class Charactes extends Component {
 	componentDidMount() {
-		const nameUrl = this.props.people ? this.props.people : ('https://swapi.co/api/people/' + this.props.match.params.idCharacter + '/');
+		const nameUrl = this.props.people ? this.props.people : ('https://swapi.co/api/people/' + this.props.match.params.characterId + '/');
 		const existElement = findCharacter(nameUrl, this.props.characters);
 
 		if (!existElement) {
@@ -36,14 +30,14 @@ class Charactes extends Component {
 	render() {
 		const view = this.props.view ? this.props.view : 'full';
 
-		let element = <ColorCircularProgress size={10} thickness={5} />;
+		let element = <Loader size={10} />;
 
-		const nameurl = this.props.people ? this.props.people : ('https://swapi.co/api/people/' + this.props.match.params.idCharacter.replace('/', '') + '/');
+		const nameurl = this.props.people ? this.props.people : ('https://swapi.co/api/people/' + this.props.match.params.characterId.replace('/', '') + '/');
 		const charra = this.props.characters;
 		const characterPeople = findCharacter(nameurl, charra);
 
 		if (characterPeople) {
-			element = (view !== 'mini') ? <Layout character={characterPeople} episodes={this.props.episodes} /> : this.renderMini(characterPeople);
+			element = (view !== 'mini') ? <DetailCharacter character={characterPeople} episodes={this.props.episodes} /> : this.renderMini(characterPeople);
 		}
 		return (
 			element
@@ -69,7 +63,7 @@ const mapDispatch = dispatch => ({
 
 Charactes.propTypes = {
 	people: PropTypes.string,
-	idCharacter: PropTypes.string,
+	characterId: PropTypes.string,
 	onLoad: PropTypes.func,
 	match: PropTypes.object,
 	view: PropTypes.string,

@@ -1,23 +1,16 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 
 import PropTypes from 'prop-types';
 import * as actions from '../../store/actions';
 
-import {withStyles} from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import DetailEpisode from './detailEpisode';
-
-const ColorCircularProgress = withStyles({
-	root: {
-		color: '#00DA9C'
-	}
-})(CircularProgress);
-
+import DetailEpisode from './DetailEpisode';
+import ListEpisode from './ListEpisode';
+import CardEpisode from './CardEpisode';
+import Loader from '../common/Loader/Loader';
 const existEpisode = (props) => {
 	const {episodes} = props;
-	const {episodeId} = props.match.params;
+	const {episodeId} = props.match ? props.match.params : props;
 	const urlEpisode = 'https://swapi.co/api/films/' + episodeId + '/';
 
 	return episodes.find((episode) => urlEpisode === episode.url);
@@ -25,7 +18,7 @@ const existEpisode = (props) => {
 
 class Episode extends Component {
 	componentDidMount() {
-		const {episodeId} = this.props.match.params;
+		const {episodeId} = this.props.match ? this.props.match.params : this.props;
 		const episode = existEpisode(this.props);
 
 		if (!episode) {
@@ -34,9 +27,24 @@ class Episode extends Component {
 	}
 	render() {
 		const episode = existEpisode(this.props);
-		const component = episode ? <DetailEpisode episode={episode} /> : <ColorCircularProgress size={10} thickness={5} />;
+		const {view} = this.props;
 
-		return (component);
+		return (
+			<Fragment>
+				{ (!episode) &&
+					<Loader />
+				}
+				{ (episode && !view) &&
+					<DetailEpisode episode={episode} />
+				}
+				{ (episode && view === 'List') &&
+					<ListEpisode episode={episode} />
+				}
+				{ (episode && view === 'Card') &&
+					<CardEpisode episode={episode} />
+				}
+			</Fragment>
+		);
 	}
 }
 
@@ -55,10 +63,10 @@ const mapDispatch = dispatch => ({
 });
 
 Episode.propTypes = {
-	idEpisode: PropTypes.string,
-	onLoad: PropTypes.func,
+	episodes: PropTypes.array,
 	match: PropTypes.object,
-	episodes: PropTypes.array
+	onLoad: PropTypes.func,
+	view: PropTypes.string
 };
 export default connect(
 	mapState,
