@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import * as URL from '../../constants/Urls';
 const getFilms = async(films) => {
 	const headers = new Headers();
 	const miInit = {
@@ -8,7 +9,7 @@ const getFilms = async(films) => {
 		cache: 'default'
 	};
 
-	const url = 'https://swapi.co/api/films/' + (films || '');
+	const url = films ? `${URL.FILMS}${films}/` : `${URL.FILMS}`;
 
 	const response = await fetch(
 		url, miInit

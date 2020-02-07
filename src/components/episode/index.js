@@ -1,32 +1,27 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 
-import PropTypes from 'prop-types';
 import * as actions from '../../store/actions';
+import {findElement} from '../../utils/find';
+import PropTypes from 'prop-types';
 
+import Loader from '../common/Loader/Loader';
 import DetailEpisode from './DetailEpisode';
 import ListEpisode from './ListEpisode';
 import CardEpisode from './CardEpisode';
-import Loader from '../common/Loader/Loader';
-const existEpisode = (props) => {
-	const {episodes} = props;
-	const {episodeId} = props.match ? props.match.params : props;
-	const urlEpisode = 'https://swapi.co/api/films/' + episodeId + '/';
-
-	return episodes.find((episode) => urlEpisode === episode.url);
-};
 
 class Episode extends Component {
 	componentDidMount() {
 		const {episodeId} = this.props.match ? this.props.match.params : this.props;
-		const episode = existEpisode(this.props);
+		const episode = findElement(episodeId, this.props.episodes);
 
 		if (!episode) {
 			this.props.onLoad(episodeId);
 		}
 	}
 	render() {
-		const episode = existEpisode(this.props);
+		const {episodeId} = this.props.match ? this.props.match.params : this.props;
+		const episode = findElement(episodeId, this.props.episodes);
 		const {view} = this.props;
 
 		return (
@@ -68,6 +63,7 @@ Episode.propTypes = {
 	onLoad: PropTypes.func,
 	view: PropTypes.string
 };
+
 export default connect(
 	mapState,
 	mapDispatch
