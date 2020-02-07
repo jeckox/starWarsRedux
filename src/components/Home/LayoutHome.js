@@ -29,7 +29,7 @@ const Layout = ({films}) => {
 	const pelis = films.map((film) => {
 		return (<Grid item xs={12} sm={6} lg={3}
 			key={film.episodeId}>
-			<Episode key={film.episodeId} view="Card" episodeId={film.urlId} />
+			<Episode key={film.episodeId} view="Card" episodeId={film.id} />
 		</Grid>);
 	});
 

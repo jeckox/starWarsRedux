@@ -5,6 +5,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Link} from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import {getLinkEpisode} from '../../utils/links';
 const useStyles = makeStyles(theme => ({
 	nested: {
 		paddingLeft: theme.spacing(4)
@@ -17,8 +18,8 @@ const useStyles = makeStyles(theme => ({
 
 const ListEpisode = ({episode}) => {
 	const classes = useStyles();
-	const {title, url} = episode;
-	const thelink = `/Episodes/${url.replace('https://swapi.co/api/films/', '')}`;
+	const {title, id} = episode;
+	const thelink = getLinkEpisode(id);
 
 	return (
 		<ListItem button className={classes.nested} key={thelink}>

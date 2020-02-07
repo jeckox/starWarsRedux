@@ -1,4 +1,5 @@
 import 'isomorphic-fetch';
+import * as URL from '../../constants/Urls';
 const getPeople = async theURL => {
 	var misCabeceras = new Headers();
 	var miInit = {
@@ -7,7 +8,8 @@ const getPeople = async theURL => {
 		mode: 'cors',
 		cache: 'default'
 	};
-	const url = theURL;
+	const url = `${URL.CHARACTER}${theURL}/`;
+
 	const response = await fetch(
 		url, miInit
 	);

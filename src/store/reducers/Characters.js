@@ -1,5 +1,5 @@
 import * as actions from '../actions';
-
+import {getIdFromURL} from '../../utils/links';
 const initialState = {
 	characters: []
 };
@@ -7,10 +7,11 @@ const initialState = {
 const charactersDataRecevied = (state, action) => {
 	const data = {
 		...action.data,
-		films: action.data.films.map((film)=>film.replace('https://swapi.co/api/films/', '')[0]),
-		hairColor: action.data.hair_color,
+		eyeColor: action.data.eye_color,
 		skinColor: action.data.skin_color,
-		eyeColor: action.data.eye_color
+		hairColor: action.data.hair_color,
+		id: getIdFromURL(action.data.url),
+		films: action.data.films.map((film)=>getIdFromURL(film))
 	};
 
 	if (![data].length) {

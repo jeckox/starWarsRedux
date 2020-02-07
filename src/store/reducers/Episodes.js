@@ -1,4 +1,5 @@
 import * as actions from '../actions';
+import {getIdFromURL} from '../../utils/links';
 
 const initialState = {
 	films: []
@@ -9,10 +10,11 @@ const filmsDataRecevied = (state, action) => {
 	const data = action.data.map(item => {
 		return {
 			...item,
-			urlId: item.url.replace('https://swapi.co/api/films/', '')[0],
 			episodeId: item.episode_id,
+			releaseDate: item.release_date,
 			openingCrawl: item.opening_crawl,
-			releaseDate: item.release_date
+			id: getIdFromURL(item.url),
+			characters: item.characters.map((character)=>getIdFromURL(character))
 		};
 	});
 
@@ -35,8 +37,10 @@ const filmDataRecevied = (state, action) => {
 	const newFilm = {
 		...data,
 		episodeId: data.episode_id,
+		releaseDate: data.release_date,
 		openingCrawl: data.opening_crawl,
-		releaseDate: data.release_date
+		id: getIdFromURL(data.url),
+		characters: data.characters.map((character)=>getIdFromURL(character))
 	};
 	const newState = [...state.films, newFilm];
 
